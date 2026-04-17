@@ -19,39 +19,47 @@ def isRelationType (e : Expr) : MetaM (Option Expr) := do
       return none
   | _ => return none
 
+-- Stores a relation and its corresponding world type.
+structure RelationInfo where
+  relation : Expr
+  worldType : Expr
+
 -- Build the Kripke frame graph from the local context.
 def drawKripkeGraph (lctx : LocalContext) : MetaM Html := do
-  let mut worldType? : Option Expr := none
-  let mut relationName? : Option Expr := none
-  -- Infer worldtypes and relation names
+  let mut relations : Array RelationInfo := #[]
+  -- Find all relations and their corresponding worldtyle in the local context.
   for decl in lctx do
     if let some t ← isRelationType decl.type then
-      worldType? := some t
-      relationName? := some (mkFVar decl.fvarId)
-      break
+      relations := relations.push {
+        relation := mkFVar decl.fvarId
+        worldType := t
+      }
 
-  let some worldType := worldType? | do
-    return <span>No relation of the form R : T → T → Prop found.</span>
-  let some rel := relationName? | unreachable!
+  if relations.isEmpty then
+    return <span>No relation of the form R: T → T → Prop found.</span>
 
-  -- Find all worlds
-  let mut worlds : Array String := #[]
-  for decl in lctx do
-    if ← isDefEq decl.type worldType then
-      worlds := worlds.push decl.userName.toString
+  -- Use the relations to find all worlds.
+  let mut worlds : Std.HashSet String := {}
+  for info in relations do
+    for decl in lctx do
+      if ← isDefEq decl.type info.worldType then
+        worlds := worlds.insert decl.userName.toString
 
-  -- Create GraphDisplay edges from found relations
+  -- Create GraphDisplay vertices from found worlds.
+  let vertices : Array GraphDisplay.Vertex := worlds.toArray.map ({id := ·})
+
+  -- Create GraphDisplay edges from found relations.
   let mut edges : Array GraphDisplay.Edge := #[]
-  for decl in lctx do
-    match decl.type with
-    | .app (.app r w1) w2 =>
-      if ← isDefEq r rel then
-        let w1str := toString (← ppExpr w1)
-        let w2str := toString (← ppExpr w2)
-        edges := edges.push {source := w1str, target := w2str}
-    | _ => pure ()
+  for info in relations do
+    for decl in lctx do
+      match decl.type with
+      | .app (.app r w1) w2 =>
+        if ← isDefEq r info.relation then
+          let w1str := toString (← ppExpr w1)
+          let w2str := toString (← ppExpr w2)
+          edges := edges.push {source := w1str, target := w2str}
+      | _ => pure ()
 
-  let vertices : Array GraphDisplay.Vertex := worlds.map ({id := ·})
   return <GraphDisplay
     vertices={vertices}
     edges={edges}
