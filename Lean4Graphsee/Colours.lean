@@ -6,16 +6,51 @@ public meta section
 
 -- Palettes for relation edges
 
--- This list of colours was taken from https://sashamaps.net/docs/resources/20-colors/
+-- This palette was taken from https://sashamaps.net/docs/resources/20-colors/
 def defaultPalette : Array String := #[
   "#e6194b", -- Red
   "#3cb44b", -- Green
   "#ffe119", -- Yellow
   "#4363d8", -- Blue
   "#f58231", -- Orange
-  "#911eb4", -- Purple
+  "#911eb4" -- Purple
+]
+
+-- This palette was taken from https://www.figma.com/color-palettes/monochromatic/
+def grayscalePalette : Array String := #[
+  "#918D8A",
+  "#E8E8E6",
+  "#636261",
+  "#ADADAD",
+  "#464243",
+  "#C5C2BE"
+]
+
+-- This palette was taken from https://mk.bcgsc.ca/colorblind/palettes.mhtml
+def colourblindPalette : Array String := #[
+  "#2271B2", -- Honolulu Blue
+  "#F748A5", -- Barbie Pink
+  "359B73", -- Ocean Green
+  "D55E00", -- Bamboo
+  "3DB7E9", -- Summer Sky
+  "E69F00" -- Gamboge
+]
+
+-- This palette was taken from https://www.schemecolor.com/stunning-bright-color-scheme.php
+def vibrantPalette : Array String := #[
+  "#66FF00",
+  "#1974D2",
+  "#08E8DE",
+  "#FFF000",
+  "#FFAA1D",
+  "#FF007F"
 ]
 
 def getPalette (paletteName : String) : Array String :=
   match paletteName with
+  | "grayscale" => grayscalePalette
+  | "greyscale" => grayscalePalette
+  | "colourblind" => colourblindPalette
+  | "colorblind" => colourblindPalette
+  | "vibrant" => vibrantPalette
   | _ => defaultPalette
