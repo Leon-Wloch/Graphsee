@@ -20,15 +20,15 @@ structure GraphOptionsConfig where
 -- Fetch the graph options config set by the user. The default options are defined here.
 def getGraphOptionsConfig : MetaM GraphOptionsConfig := do
   let options ← getOptions
-  let paletteName := options.get `Kripke.edgeColours "default"
+  let paletteName := options.get `Graphsee.edgeColours "default"
   return {
-    showGoal := options.getBool `Kripke.showGoal true
+    showGoal := options.getBool `Graphsee.showGoal true
     edgeColours := getPalette (paletteName)
-    edgeLength := options.get `Kripke.edgeLength 125
-    edgeThickness := options.get `Kripke.edgeThickness 2
-    edgeFontSize := options.get `Kripke.edgeFontSize 11
-    vertexRadius := options.get `Kripke.vertexRadius 12
-    vertexFontSize := options.get `Kripke.vertexFontSize 11
+    edgeLength := options.get `Graphsee.edgeLength 125
+    edgeThickness := options.get `Graphsee.edgeThickness 2
+    edgeFontSize := options.get `Graphsee.edgeFontSize 11
+    vertexRadius := options.get `Graphsee.vertexRadius 12
+    vertexFontSize := options.get `Graphsee.vertexFontSize 11
   }
 
 structure relationInstance where
@@ -161,8 +161,8 @@ def createGraphDisplayEdges (edges : Array relationInstance) (graphOptionsConfig
   }
   )
 
--- Build the Kripke frame graph from the local context.
-def drawKripkeGraph (lctx : LocalContext) (goalType : Expr) : MetaM Html := do
+-- Build the graph from the local context.
+def drawGraph (lctx : LocalContext) (goalType : Expr) : MetaM Html := do
   let graphOptionsConfig ← getGraphOptionsConfig
 
   -- Find all worlds and relation instances

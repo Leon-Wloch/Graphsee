@@ -18,7 +18,7 @@ example (w1 w2 w3 : W)
   (h3 : R w1 w3) : True := by
   trivial
 
-set_option Kripke.edgeColours "vibrant"
+set_option Graphsee.edgeColours "vibrant"
 
 -- Simple example
 example (w1 w2 w3 : W)
