@@ -29,10 +29,10 @@ example
   (R : W → W → Prop)
   (P Q : W → Prop)
   (h1 : R w u)
-  (h2 : Q u)
-  (h3 : P u)
+  (h2 : P u)
+  (h3 : Q u)
   : ∃ x, R w x ∧ P x ∧ Q x := by
-  exact ⟨u, h1, h3, h2⟩
+  exact ⟨u, h1, h2, h3⟩
 
 /- Transitive relation -/
 example
