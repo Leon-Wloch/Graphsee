@@ -24,6 +24,7 @@ git clone https://github.com/Leon-Wloch/Graphsee
 cd Graphsee/
 lake build
 ```
+After doing this, include `import Graphsee` in your project to import the widget.
 ### Demos
 <img width="1795" height="886" alt="image" src="https://github.com/user-attachments/assets/9d13e6d3-1959-49bc-a5fb-98a58a4abc0c" />
 
