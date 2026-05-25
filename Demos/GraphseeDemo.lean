@@ -25,7 +25,8 @@ example
 
 /- Witness with multiple properties -/
 example
-  (W : Type) (w u : W)
+  (W : Type)
+  (w u : W)
   (R : W → W → Prop)
   (P Q : W → Prop)
   (h1 : R w u)
@@ -52,8 +53,11 @@ example
 /- Different relations and different world types -/
 example
   (W : Type) (w1 w2 w3 : W)
+  (S : Type) (s1 s2 : S)
   (R1 : W → W → Prop)
   (R2: W → W → Prop)
+  (S1 : S → S → Prop)
   (h1 : R1 w1 w2)
-  (h2 : R2 w1 w3) : True := by
+  (h2 : R2 w1 w3)
+  (h3 : S1 s1 s2) : True := by
   trivial
