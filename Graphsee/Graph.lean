@@ -239,7 +239,7 @@ def drawGraph (lctx : LocalContext) (goalType : Expr) : MetaM Html := do
       strength? := some 0
     },
     .collide {
-      radius? := some ((computeMaxVertexRadius worlds graphOptionsConfig).toFloat * 1.1)
+      radius? := some ((computeMaxVertexRadius worlds graphOptionsConfig).toFloat * 1.5)
       strength? := some 0.1
       iterations? := some 1
     },
