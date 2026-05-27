@@ -30,7 +30,7 @@ After doing this, include `import Graphsee` in your project to import the widget
 
 The screenshot above shows a basic use-case for Graphsee, visualising three worlds and the three relations between them. 
 
-For more demonstrations, see `Demo/GraphseeDemos.lean`.
+For more demonstrations, see `Demos/GraphseeDemo.lean`.
 
 ### Options
 
